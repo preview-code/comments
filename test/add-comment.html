@@ -1,0 +1,118 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2017 Preview-Code. All rights reserved.
+This code may only be used under the BSD style license found in LICENSE.txt
+-->
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>add-comment tests</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../iron-test-helpers/mock-interactions.js"></script>
+
+  <link rel="import" href="../add-comment.html">
+</head>
+
+<body>
+
+  <test-fixture id="basic">
+    <template>
+      <add-comment>
+      </add-comment>
+    </template>
+  </test-fixture>
+  <script>
+    describe('<add-comment>', function () {
+      var elem;
+      beforeEach(function () {
+        elem = fixture('basic');
+        elem.comments = [];
+        elem.hidden = false;
+        elem.comment = 'hello';
+
+      });
+
+      it('Adding comments adds to list', function () {
+        var addButton = Polymer.dom(elem.root).querySelector('#add');
+        elem.addEventListener('add-comment', function (e) {
+          assert.deepEqual(e.detail, 'hello');
+        });
+        MockInteractions.tap(addButton);
+      });
+
+      it('Adding empty comment does not add', function (done) {
+        var addButton = Polymer.dom(elem.root).querySelector('#add');
+        elem.comment = '';
+
+        elem.addEventListener('add-comment', function () {
+          done('test failed')
+        });
+
+        MockInteractions.tap(addButton);
+        setTimeout(100);
+        done();
+
+      });
+
+      it('Adding comment with only whitespace  does not add', function (done) {
+        var addButton = Polymer.dom(elem.root).querySelector('#add');
+        elem.comment = '          \n      ';
+
+        elem.addEventListener('add-comment', function () {
+          done('test failed')
+        });
+
+        MockInteractions.tap(addButton);
+        setTimeout(100);
+        done();
+      });
+
+      it('Adding comments resets textarea', function () {
+        var addButton = Polymer.dom(elem.root).querySelector('#add');
+        MockInteractions.tap(addButton);
+        assert.deepEqual(elem.comment, '');
+      });
+
+      it('After add hides element lineComment', function () {
+        elem.lineComment = true;
+        var addButton = Polymer.dom(elem.root).querySelector('#add');
+        assert.equal(elem.hidden, false);
+        MockInteractions.tap(addButton);
+        assert.equal(elem.hidden, true);
+      });
+
+      it('After add does not hides element', function () {
+        var addButton = Polymer.dom(elem.root).querySelector('#add');
+        assert.equal(elem.hidden, false);
+        MockInteractions.tap(addButton);
+        assert.equal(elem.hidden, false);
+      });
+
+      it('Cancel hides element when line-comment', function () {
+        elem.lineComment = true;
+        var cancelButton = Polymer.dom(elem.root).querySelector('#cancel');
+        assert.equal(elem.hidden, false);
+        MockInteractions.tap(cancelButton);
+        assert.equal(elem.hidden, true);
+      });
+
+      it('No hides button when not line-comment', function () {
+        elem.lineComment = false;
+        assert.isTrue(Polymer.dom(elem.root).querySelector('#cancel').hasAttribute('hidden'));
+      });
+
+      it('Hides button when line-comment', function () {
+        elem.lineComment = true;
+        assert.isFalse(Polymer.dom(elem.root).querySelector('#cancel').hasAttribute('hidden'));
+      });
+
+    });
+  </script>
+</body>
+
+</html>

@@ -1,28 +1,37 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+<!--
+@license
+Copyright (c) 2017 Preview-Code. All rights reserved.
+This code may only be used under the BSD style license found in LICENSE.txt
+-->
+<html>
+<head>
+  <title>code-comment demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../../paper-styles/demo-pages.html">
+  <style>
+    a {
+      display: block;
+      margin-bottom: 10px;
+    }
+    li {
+      list-style: none;
+    }
+  </style>
+</head>
+<body unresolved>
 
-    <title>comment-container demo</title>
-
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-
-    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../comment-container.html">
-
-    <style is="custom-style" include="demo-pages-shared-styles">
-    </style>
-  </head>
-  <body>
-    <div class="vertical-section-container centered">
-      <h3>Basic comment-container demo</h3>
-      <demo-snippet>
-        <template>
-          <comment-container></comment-container>
-        </template>
-      </demo-snippet>
+  <div class="horizontal-section-container">
+    <div>
+      <h3>comments demo</h3>
+      <ul class="horizontal-section">
+        <li><a href="comment/index.html" target="_blank">Basic usage</a></li>
+        <li><a href="line-comment/index.html" target="_blank">Line comment usage</a></li>
+      </ul>
     </div>
-  </body>
+  </div>
+
+</body>
 </html>

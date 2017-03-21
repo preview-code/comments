@@ -1,0 +1,72 @@
+<!--
+@license
+Copyright (c) 2017 Preview-Code. All rights reserved.
+This code may only be used under the BSD style license found in LICENSE.txt
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-textarea.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../markdown-input/markdown-input.html">
+
+<!--
+`comment`
+Comment element for preview code
+
+@demo demo/index.html-->
+
+
+<dom-module id="add-comment">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+    </style>
+
+    <markdown-input markdown="{{comment}}" label="Leave a comment."></markdown-input>
+    <paper-button raised class="button" id="add" on-tap="_addComment">Add comment</paper-button>
+    <paper-button raised class="button" id="cancel" hidden="[[!lineComment]]" on-tap="_hide">Cancel</paper-button>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'add-comment',
+      properties: {
+        comment: {
+          type: String,
+          value: ''
+        },
+        hidden: {
+          type: Boolean,
+          notify: true,
+          reflectToAttribute: true
+        },
+        user: {
+          type: Object
+        },
+        lineComment: {
+          type: Boolean,
+          value: false
+        }
+      },
+      _addComment: function () {
+        if (this.comment.replace(/\s/g, '') !== '') {
+          this.fire('add-comment', this.comment);
+          this._hide();
+        }
+      },
+
+      _hide: function () {
+        this.comment = '';
+        if (this.lineComment) {
+          this.hidden = true;
+        }
+      }
+    });
+  </script>
+</dom-module>

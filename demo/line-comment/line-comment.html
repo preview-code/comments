@@ -1,0 +1,67 @@
+<!--
+@license
+Copyright (c) 2017 Preview-Code. All rights reserved.
+This code may only be used under the BSD style license found in LICENSE.txt
+-->
+<link rel="import" href="../../../polymer/polymer.html">
+<link rel="import" href="../../add-comment.html">
+<link rel="import" href="../../comment-list.html">
+
+<dom-module id="basic-demo">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+
+    <comment-list list="[[comments]]"></comment-list>
+    <add-comment hidden="{{hideAdd}}" comments="{{comments}}" , user="[[user]]" , line-comment="true"></add-comment>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'basic-demo',
+
+      properties: {
+        comments: {
+          type: Array,
+          value: function () {
+            return [];
+          }
+        },
+        user: {
+          type: Object,
+          value: {
+            login: 'Eva',
+            html_url: 'preview-code.com',
+            avatar_url: 'https://avatars1.githubusercontent.com/u/5946438?v=3&s=460'
+          }
+        },
+        hideAdd: {
+          type: Boolean,
+          value: false,
+          notify: true,
+          reflectToAttribute: true
+        },
+      },
+
+      listeners: {
+        'add-comment': 'addComment',
+      },
+
+      addComment: function (content) {
+        var newComment = {};
+        newComment.comment = content.detail;
+        newComment.user = this.user;
+        newComment.created_at = '2017-03-20T11:12:27Z'
+        this.push('comments', newComment)
+      }
+
+    });
+  </script>
+</dom-module>

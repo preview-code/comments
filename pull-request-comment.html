@@ -1,0 +1,97 @@
+<!-- Copyright (c) 2016, preview-code
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+* Neither the name of preview-code nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<link rel="import" href="../util/elements/list-item-label.html">
+<link rel="import" href="../util/elements/a-user.html">
+<link rel="import" href="../util/behaviors/to-date-string-behavior.html">
+<link rel="import" href="../markdown-input/marked-github-element.html">
+
+<dom-module id="pull-request-comment">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        padding: 1em 0;
+      }
+      .title > * {
+        line-height: 2em;
+      }
+      .time {
+        color: var(--secondary-text-color);
+        margin-left: 1em;
+      }
+
+      img {
+        @apply(--avatar-image);
+        margin: 1em 2em 0 2em;
+      }
+      header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 128px;
+      }
+      .content {
+        flex-grow: 1;
+        -webkit-box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+        box-shadow: 0 0 8px 0 rgba(0,0,0,0.2);
+        background-color: var(--primary-background-color);
+        padding: 1em 2em;
+      }
+    </style>
+    <img src$="[[author.avatar_url]]" width="64px" height="64px" alt$="[[author.login]]" />
+    <div class="content">
+      <div class="title">
+        <a-user user="[[author]]"></a-user>
+        <list-item-label class="time" type="info" icon="device:access-time" title$="Posted [[_timeString]]">[[_timeString]]</list-item-label>
+      </div>
+      <marked-github-element markdown="[[text]]"></marked-github-element>
+    </div>
+
+  </template>
+  <script>
+    /*global ToDateStringBehavior*/
+    Polymer({
+      is: 'pull-request-comment',
+      behaviors: [ToDateStringBehavior],
+      properties: {
+        text: String,
+        author: Object,
+        date: String,
+        _timeString: {
+          type: String,
+          computed: 'toDateString(date,_dateOption)'
+        },
+        _dateOption: {
+          type: String,
+          value: 'short'
+        }
+      }
+    });
+  </script>
+</dom-module>
