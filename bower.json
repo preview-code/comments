@@ -10,7 +10,6 @@
     "url": "git://github.com/preview-code/comments.git"
   },
   "homepage": "https://github.com/preview-code/comments",
-  "main": "comment-list.html",
   "license": "BSD-3-Clause",
   "private": true,
   "ignore": [
@@ -44,8 +43,5 @@
     "comment",
     "review",
     "code"
-  ],
-  "resolutions": {
-    "iron-test-helpers": "^1.0.0"
-  }
+  ]
 }
