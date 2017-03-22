@@ -16,7 +16,7 @@ This code may only be used under the BSD style license found in LICENSE.txt
     </style>
 
  <comment-list list="[[comments]]"></comment-list>
- <add-comment hidden="{{hideAdd}}" comments="{{comments}}", user="[[user]]", line-comment="[[lineComment]]"></add-comment>
+ <add-comment hidden="{{hideAdd}}" comments="{{comments}}" line-comment="[[lineComment]]" project="[[project]]"></add-comment>
 
   </template>
   <script>
@@ -36,6 +36,13 @@ This code may only be used under the BSD style license found in LICENSE.txt
             login: 'Eva',
             html_url: 'preview-code.com',
             avatar_url: 'https://avatars1.githubusercontent.com/u/5946438?v=3&s=460'
+          }
+        },
+        project: {
+          type: Object,
+          value: {
+            name: 'name',
+            owner: 'owner'
           }
         }
       },

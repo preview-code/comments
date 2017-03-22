@@ -20,7 +20,7 @@ This code may only be used under the BSD style license found in LICENSE.txt
     </style>
 
     <comment-list list="[[comments]]"></comment-list>
-    <add-comment hidden="{{hideAdd}}" comments="{{comments}}" , user="[[user]]" , line-comment="true"></add-comment>
+    <add-comment hidden="{{hideAdd}}" comments="{{comments}}" project="[[project]]" line-comment="true"></add-comment>
 
   </template>
   <script>
@@ -48,6 +48,13 @@ This code may only be used under the BSD style license found in LICENSE.txt
           notify: true,
           reflectToAttribute: true
         },
+        project: {
+          type: Object,
+          value: {
+            name: 'name',
+            owner: 'owner'
+          }
+        }
       },
 
       listeners: {

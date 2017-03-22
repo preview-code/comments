@@ -28,7 +28,7 @@ Comment element for preview code
 
     </style>
 
-    <markdown-input markdown="{{comment}}" label="Leave a comment."></markdown-input>
+    <markdown-input markdown="{{comment}}" project="[[project]]" label="Leave a comment."></markdown-input>
     <paper-button raised class="button" id="add" on-tap="_addComment">Add comment</paper-button>
     <paper-button raised class="button" id="cancel" hidden="[[!lineComment]]" on-tap="_hide">Cancel</paper-button>
 
@@ -45,9 +45,6 @@ Comment element for preview code
           type: Boolean,
           notify: true,
           reflectToAttribute: true
-        },
-        user: {
-          type: Object
         },
         lineComment: {
           type: Boolean,
