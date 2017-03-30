@@ -44,12 +44,14 @@ Comment element for preview code
         hidden: {
           type: Boolean,
           notify: true,
-          reflectToAttribute: true
+          reflectToAttribute: true,
+          value: false
         },
         lineComment: {
           type: Boolean,
           value: false
-        }
+        },
+        project: Object
       },
       _addComment: function () {
         if (this.comment.replace(/\s/g, '') !== '') {

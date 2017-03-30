@@ -63,7 +63,7 @@ This code may only be used under the BSD style license found in LICENSE.txt
 
       addComment: function (content) {
         var newComment = {};
-        newComment.comment = content.detail;
+        newComment.body = content.detail;
         newComment.user = this.user;
         newComment.created_at = '2017-03-20T11:12:27Z'
         this.push('comments', newComment)
