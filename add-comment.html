@@ -5,6 +5,8 @@ This code may only be used under the BSD style license found in LICENSE.txt
 -->
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-input/paper-textarea.html">
+<link rel="import" href="../paper-toast/paper-toast.html">
+<link rel="import" href="../paper-spinner/paper-spinner.html">
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../markdown-input/markdown-input.html">
 
@@ -26,11 +28,21 @@ Comment element for preview code
         display: none !important;
       }
 
+      paper-spinner {
+        vertical-align: middle;
+        margin-left: 10px;
+      }
+
+      paper-button {
+        margin: 0 auto;
+      }
     </style>
 
     <markdown-input markdown="{{comment}}" project="[[project]]" label="Leave a comment."></markdown-input>
     <paper-button raised class="button" id="add" on-tap="_addComment">Add comment</paper-button>
     <paper-button raised class="button" id="cancel" hidden="[[!lineComment]]" on-tap="_hide">Cancel</paper-button>
+    <paper-spinner alt="Posting comment..." active="[[_loading]]"></paper-spinner>
+    <paper-toast id="errorToast" horizontal-align="right" horizontal-offset="20"></paper-toast>
 
   </template>
   <script>
@@ -51,12 +63,25 @@ Comment element for preview code
           type: Boolean,
           value: false
         },
-        project: Object
+        project: Object,
+        _loading: {
+          type: Boolean,
+          value: false
+        }
       },
       _addComment: function () {
         if (this.comment.replace(/\s/g, '') !== '') {
-          this.fire('add-comment', this.comment);
-          this._hide();
+
+          const stopLoading = () => {
+            this._loading = false;
+            this._hide();
+          }
+
+          this.fire('add-comment', { body: this.comment, stopLoading: stopLoading });
+          this._loading = true;
+        }
+        else {
+          this.$.errorToast.show({ text: 'A comment may not contain only whitespace.' });
         }
       },
 

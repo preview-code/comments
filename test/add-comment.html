@@ -40,7 +40,7 @@ This code may only be used under the BSD style license found in LICENSE.txt
       it('Adding comments adds to list', function () {
         var addButton = Polymer.dom(elem.root).querySelector('#add');
         elem.addEventListener('add-comment', function (e) {
-          assert.deepEqual(e.detail, 'hello');
+          assert.deepEqual(e.detail.body, 'hello');
         });
         MockInteractions.tap(addButton);
       });
@@ -72,18 +72,31 @@ This code may only be used under the BSD style license found in LICENSE.txt
         done();
       });
 
-      it('Adding comments resets textarea', function () {
+      it('Adding comments resets textarea', function (done) {
+
+        elem.addEventListener('add-comment', function (e) {
+          e.detail.stopLoading();
+          assert.deepEqual(elem.comment, '');
+          done();
+        });
+
         var addButton = Polymer.dom(elem.root).querySelector('#add');
         MockInteractions.tap(addButton);
-        assert.deepEqual(elem.comment, '');
       });
 
-      it('After add hides element lineComment', function () {
+      it('After add hides element lineComment', function (done) {
+
+        elem.addEventListener('add-comment', function (e) {
+          e.detail.stopLoading();
+          assert.equal(elem.hidden, true);
+          done();
+        });
+
+
         elem.lineComment = true;
         var addButton = Polymer.dom(elem.root).querySelector('#add');
         assert.equal(elem.hidden, false);
         MockInteractions.tap(addButton);
-        assert.equal(elem.hidden, true);
       });
 
       it('After add does not hides element', function () {
