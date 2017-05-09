@@ -72,9 +72,11 @@ Comment element for preview code
       _addComment: function () {
         if (this.comment.replace(/\s/g, '') !== '') {
 
-          const stopLoading = () => {
+          const stopLoading = (errored) => {
             this._loading = false;
-            this._hide();
+            if(!errored){
+              this._hide();
+            }
           }
 
           this.fire('add-comment', { body: this.comment, stopLoading: stopLoading });

@@ -106,6 +106,20 @@ This code may only be used under the BSD style license found in LICENSE.txt
         assert.equal(elem.hidden, false);
       });
 
+      it('Does not hide, when line-comment fails', function (done) {
+        elem.addEventListener('add-comment', function (e) {
+          e.detail.stopLoading(true);
+          assert.equal(elem.hidden, false);
+          done();
+        });
+
+
+        elem.lineComment = true;
+        var addButton = Polymer.dom(elem.root).querySelector('#add');
+        assert.equal(elem.hidden, false);
+        MockInteractions.tap(addButton);
+      });
+
       it('Cancel hides element when line-comment', function () {
         elem.lineComment = true;
         var cancelButton = Polymer.dom(elem.root).querySelector('#cancel');
@@ -114,7 +128,7 @@ This code may only be used under the BSD style license found in LICENSE.txt
         assert.equal(elem.hidden, true);
       });
 
-      it('No hides button when not line-comment', function () {
+      it('No cancel button, when not a line-comment', function () {
         elem.lineComment = false;
         assert.isTrue(Polymer.dom(elem.root).querySelector('#cancel').hasAttribute('hidden'));
       });
